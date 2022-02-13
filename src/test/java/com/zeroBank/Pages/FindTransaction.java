@@ -38,10 +38,14 @@ public class FindTransaction extends Basepages {
     @FindBy(xpath = "(//table[@class='table table-condensed table-hover'])[2]/tbody/tr")
     public List<WebElement> transactionTables;
 
+    @FindBy(id = "aa_type")
+    public WebElement type;
+
+    @FindBy(xpath ="//table[@class='table table-condensed table-hover']/thead//th")
+    public List<WebElement> transactionHeadValues;
+
 
     public List<String> find_Dates() {
-
-        List<WebElement> transactionTables = Driver.get().findElements(By.xpath("(//table[@class='table table-condensed table-hover'])[2]/tbody/tr"));
 
         int iter = transactionTables.size();
 
@@ -60,4 +64,24 @@ public class FindTransaction extends Basepages {
         return dates;
 
     }
+
+    public List<String> Description() {
+
+        int iter = transactionTables.size();
+
+        List<String> descriptions = new ArrayList<>();
+
+        for (int i = 1; i <= iter; i++) {
+
+            String path = "//div[starts-with(@id,'filtered')]//tbody/tr[" + i + "]/td[2]";
+
+            WebElement type = Driver.get().findElement(By.xpath(path));
+
+            descriptions.add(type.getText());
+
+        }
+
+        return descriptions;
+    }
+
 }
